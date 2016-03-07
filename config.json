@@ -1,0 +1,14 @@
+{
+  "local": {
+    "EnvironmentConfig": {
+      "env_name": "LOCAL",
+      "api": "http://localhost:8080/api"
+    }
+  },
+  "development": {
+    "EnvironmentConfig": {
+      "env_name": "DEVELOPMENT",
+      "api": ""
+    }
+  }
+}
