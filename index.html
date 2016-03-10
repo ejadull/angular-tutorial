@@ -22,6 +22,11 @@
         <script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/3.10.1/lodash.min.js"></script>
     </head>
     <body>
+        <!-- Environment label directive -->
+        <env-label environment="currentEnvironment"></env-label>
+
+        <!-- Dynamic content depending on the current app state -->
+        <div ui-view></div>
 
         <!-- All injected js files come here.. See gulp task 'inject' in gulpfile.js -->
         <!-- inject:js -->
