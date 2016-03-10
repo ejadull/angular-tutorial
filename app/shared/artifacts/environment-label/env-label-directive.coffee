@@ -4,6 +4,6 @@ angular.module('shared').directive('envLabel', ->
     scope: {
       environment: '='
     }
-    templateUrl: '/app/shared/environment-label/env-label.html'
+    templateUrl: '/app/shared/artifacts/environment-label/env-label.html'
   }
 )

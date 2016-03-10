@@ -1,0 +1,21 @@
+@import '../variables/brand-colors';
+
+@loaderSize: 65px;
+
+.loader {
+  background-color: transparent;
+  position: relative;
+  overflow: hidden;
+  height: @loaderSize + 5;
+  width: @loaderSize + 5;
+  margin: 7rem auto;
+
+  i {
+    color: @black-transparent;
+    position: absolute;
+    font-size: @loaderSize;
+    left: 2.5px;
+    top: 2.5px;
+    z-index: 3;
+  }
+}

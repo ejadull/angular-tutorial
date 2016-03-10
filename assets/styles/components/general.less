@@ -2,6 +2,20 @@ body {
   padding-top: 70px; /* Required padding for .navbar-fixed-top. Remove if using .navbar-static-top. Change if height of navigation changes. */
 }
 
-footer {
-  margin: 50px 0;
+.navbar.navbar-inverse.navbar-fixed-bottom {
+  p.copyright {
+    margin-top: 14px;
+    color: #9d9d9d;
+  }
+}
+
+a, a:hover {
+  text-decoration: none;
+  cursor: pointer;
+}
+
+@media (min-width: 768px) {
+  .navbar {
+    border-radius: 0;
+  }
 }

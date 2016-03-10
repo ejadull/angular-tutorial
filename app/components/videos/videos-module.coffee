@@ -8,4 +8,9 @@ angular.module('videos', ['ui.router']) #Create the videos module. It will inclu
         abstract: true
         templateUrl: '/app/components/videos/videos-layout.html'
     })
+    .state('videos.trending', { #Videos child state (not abstract because it can be referenced). It inherits its father's layout
+      url: '/trending'
+      templateUrl: '/app/components/videos/trending/trending-videos.html'
+      controller: 'TrendingVideosController'
+    })
 )
