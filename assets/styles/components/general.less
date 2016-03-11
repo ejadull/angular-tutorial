@@ -1,17 +1,44 @@
 body {
   padding-top: 70px; /* Required padding for .navbar-fixed-top. Remove if using .navbar-static-top. Change if height of navigation changes. */
+  padding-bottom: 70px;
 }
 
 .navbar.navbar-inverse.navbar-fixed-bottom {
+  border: none;
+
   p.copyright {
     margin-top: 14px;
     color: #9d9d9d;
   }
 }
 
+.navbar.navbar-inverse.navbar-fixed-top {
+  border: none;
+}
+
 a, a:hover {
   text-decoration: none;
   cursor: pointer;
+}
+
+@nav-bar-left-width: 150px;
+.navbar-fixed-left {
+  width: @nav-bar-left-width;
+  position: fixed;
+  border-radius: 0;
+  height: 100%;
+  top: 0;
+  border: none;
+}
+
+.navbar-fixed-left .navbar-nav > li {
+  text-align: justify;
+  float: none;  /* Cancel default li float: left */
+  width: @nav-bar-left-width;
+}
+
+.navbar-fixed-left + .container-fluid {
+  padding-left: @nav-bar-left-width;
 }
 
 @media (min-width: 768px) {
