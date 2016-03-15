@@ -1,0 +1,107 @@
+<div class="container">
+    <!-- Title -->
+    <div class="row">
+        <div class="col-md-12">
+            <h4><i class="fa fa-dot-circle-o"></i>&nbsp; Step 1:  Create the directory structure</h4>
+        </div>
+    </div>
+    <!-- Details -->
+    <div class="row">
+        <div class="col-md-11">
+            <div class="paragraph">
+                <p>
+                    To start with step 1, please clone the repository from <a href="https://github.com/buccfer/angular-tutorial" target="_blank">https://github.com/buccfer/angular-tutorial</a>
+                    and fetch the step-1 branch.
+                </p>
+                <pre>git fetch && git checkout step-1</pre>
+                <div class="alert alert-info">
+                    Note: This tutorial assumes that all javascript and css files are imported in the index.html file (i.e: angular.min.js, bootstrap.min.css, etc).
+                    In this example we use Gulp.js along with NPM to build the project, but this is outside the scope of this tutorial. For more details, you can take a look at the
+                    gulpfile.js and the <a href="http://gulpjs.com/" target="_blank">Gulp official site</a>.
+                </div>
+            </div>
+            <div class="paragraph">
+                <p>1. The first thing we need to do is to define the directory structure. There are many different ways to structure your application and
+                    each has it own benefits depending on the nature of the project. There are also many different generators such as Yeoman (see <a href="http://yeoman.io/generators/" target="_blank">http://yeoman.io/generators/</a>)
+                    that automatically create the directory structure and files for you, according to the best practices.<br>
+                    <br>
+                    In this tutorial I will show a simple and practical way to structure your project that works for small client web applications.<br>
+                </p>
+                <pre>
+                    app/
+                    ----- shared/ <span class="important-note">All reusable components.</span>
+                    ---------- sidebar/
+                    --------------- sidebarDirective.js
+                    --------------- sidebarView.html
+                    ---------- article/
+                    --------------- articleDirective.js
+                    --------------- articleView.html
+                    ----- components/ <span class="important-note">Each component is treated as a mini Angular app.</span>
+                    ---------- home/
+                    --------------- homeController.js
+                    --------------- homeView.html
+                    ---------- blog/
+                    --------------- blogController.js
+                    --------------- blogView.html
+                    ----- app.module.js <span class="important-note">The main module of the AngularJs App.</span>
+                    assets/
+                    ----- img/ <span class="important-note">Images and icons for your app.</span>
+                    ----- css/ <span class="important-note">All styles and style related files (SCSS or LESS files).</span>
+                    ----- js/  <span class="important-note">JavaScript files written for your app that are not for angular.</span>
+                    ----- libs/ <span class="important-note">Third-party libraries such as jQuery, Moment, Underscore, etc.</span>
+                    index.html <span class="important-note">The unique entire page of the SPA.</span>
+                </pre>
+            </div>
+            <div class="paragraph">
+                <p>2. The second thing we need to do is to declare the scope of the Angular application in our index.html file as below.</p>
+                <p><strong>index.html</strong></p>
+                <pre>
+                    &lt!DOCTYPE html>
+                    &lthtml lang="en" ng-app="videoApp"> <span class="important-note">Add ng-app to the DOM element that will be the root for your Angular app.</span>
+                        &lthead>                         <span class="important-note">IMPORTANT: The value of the ng-app must match with the app module name.</span>
+                            &ltmeta charset="utf-8">
+                            &ltmeta http-equiv="X-UA-Compatible" content="IE=edge">
+                            &ltmeta name="viewport" content="width=device-width, initial-scale=1">
+                            &ltmeta name="description" content="AngularJS - Video App Tutorial">
+                            &ltmeta name="author" content="Fernando Buccella">
+                            &lttitle>Video App&lt/title>
+
+                            #All injected css files come here.. See gulp task 'inject' in gulpfile.js
+                            #inject:css
+                            #endinject
+
+                            #HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries
+                            #WARNING: Respond.js doesn't work if you view the page via file://
+                            #[if lt IE 9]>
+                            &ltscript src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js">&lt/script>
+                            &ltscript src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js">&lt/script>
+                            #&lt![endif]
+
+                            &ltscript src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/3.10.1/lodash.min.js">&lt/script>
+                        &lt/head>
+                        &ltbody>
+                            #All injected js files come here.. See gulp task 'inject' in gulpfile.js
+                            #inject:js
+                            #endinject
+                        &lt/body>
+                    &lt/html>
+                </pre>
+            </div>
+            <div class="paragraph">
+                <p>3. To finish our set up then we need to create the app module with the same name as we put in the ng-app directive.</p>
+                <p><strong>app-module.coffee</strong></p>
+                <pre>
+                    angular.module(<span class="important-note">'videoApp'</span>, [])
+
+                    .config(() ->
+                      #Configurations in the config stage
+                    )
+
+                    .run(() ->
+                      #Configurations in the running stage
+                    )
+                </pre>
+            </div>
+        </div>
+    </div>
+</div>
