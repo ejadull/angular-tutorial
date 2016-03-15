@@ -1,4 +1,4 @@
-angular.module('tutorial', ['ui.router']) #Create the tutorial module. It will include all the logic for the tutorial view.
+angular.module('tutorial', ['ui.router', 'ui.bootstrap']) #Create the tutorial module. It will include all the logic for the tutorial view.
                                           #Add ui.router module as a dependency to use ui-router functionality.
 
 .config(($stateProvider) ->

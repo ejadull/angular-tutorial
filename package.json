@@ -26,6 +26,7 @@
     "gulp-util": "~3.0.7",
     "imagemin-pngquant": "^4.2.2",
     "jquery": "~2.1.4",
-    "restangular": "~1.5.1"
+    "restangular": "~1.5.1",
+    "angular-ui-bootstrap": "~1.2.4"
   }
 }
