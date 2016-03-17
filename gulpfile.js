@@ -21,11 +21,13 @@ var gulp = require('gulp'),
     //Used libraries
     var libraries = ['node_modules/bootstrap/dist/css/bootstrap.min.css',
                      'node_modules/font-awesome/css/font-awesome.min.css',
+                     'node_modules/angular-ui-bootstrap/dist/ui-bootstrap-csp.css',
                      'node_modules/jquery/dist/jquery.min.js',
                      'node_modules/bootstrap/dist/js/bootstrap.min.js',
                      'node_modules/angular/angular.min.js',
                      'node_modules/angular-animate/angular-animate.min.js',
                      'node_modules/angular-ui-router/release/angular-ui-router.min.js',
+                     'node_modules/angular-ui-bootstrap/dist/ui-bootstrap.js',
                      'node_modules/restangular/dist/restangular.min.js'];
 
 //****************************** Tasks for each environment ******************************
@@ -147,11 +149,13 @@ gulp.task('inject', function(){
 
     var vendorFiles = ['dist/vendor/bootstrap.min.css',
                        'dist/vendor/font-awesome.min.css',
+                       'dist/vendor/ui-bootstrap-csp.css',
                        'dist/vendor/jquery.min.js',
                        'dist/vendor/bootstrap.min.js',
                        'dist/vendor/angular.min.js',
                        'dist/vendor/angular-animate.min.js',
                        'dist/vendor/angular-ui-router.min.js',
+                       'dist/vendor/ui-bootstrap.js',
                        'dist/vendor/restangular.min.js'];
 
     //Custom css and js files
@@ -200,6 +204,10 @@ gulp.task('build-dist', function() {
     //Copy font awesome fonts
     gulp.src('node_modules/font-awesome/fonts/**/*')
         .pipe(gulp.dest('dist/fonts'));
+
+    //UI Bootstrap templates
+    gulp.src('node_modules/angular-ui-bootstrap/template/**/*')
+        .pipe(gulp.dest('dist/uib/template'));
 
     //Copy vendor files
     return gulp.src(libraries)
