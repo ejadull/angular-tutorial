@@ -1,24 +1,20 @@
-angular.module('videos').controller('TopRatedVideosController', ($scope, $log, $rootScope, $timeout) ->
+angular.module('videos').controller('TopRatedVideosController', ($scope, $rootScope, VideoService) ->
 
   LOADING_KEY = "top-rated-videos"
 
-  delayedSpinnerStop = ->
-    $timeout(->
-      $rootScope.spinner.stop(LOADING_KEY)
-    , 3000)
+  $scope.getYoutubeUrl = (videoId, embedded) ->
+    baseUrl = if embedded then "https://www.youtube.com/embed/" else "https://www.youtube.com/watch?v="
+    baseUrl+videoId
 
   getVideos = -> #Simulate to retrieve the videos from BE
     $rootScope.spinner.start(LOADING_KEY)
-    $scope.topRatedVideos = [
-      {embeddedUrl: "https://www.youtube.com/embed/Mlahvvymkxc", title: "Metallica - The Day That Never Comes[Video Premiere]", views: 21182703, likes: 97383, dislikes: 2453, description: "Uploaded on Sep 2, 2008. It's midnight here at HQ and we are incredibly proud to present you with the debut of 'The Day That Never Comes' ...not so much the standard video fare, but what we like to think of as a short film.", youtubeUrl: "https://www.youtube.com/watch?v=Mlahvvymkxc"},
-      {embeddedUrl: "https://www.youtube.com/embed/Mlahvvymkxc", title: "Metallica - The Day That Never Comes[Video Premiere]", views: 21182703, likes: 97383, dislikes: 2453, description: "Uploaded on Sep 2, 2008. It's midnight here at HQ and we are incredibly proud to present you with the debut of 'The Day That Never Comes' ...not so much the standard video fare, but what we like to think of as a short film.", youtubeUrl: "https://www.youtube.com/watch?v=Mlahvvymkxc"},
-      {embeddedUrl: "https://www.youtube.com/embed/Mlahvvymkxc", title: "Metallica - The Day That Never Comes[Video Premiere]", views: 21182703, likes: 97383, dislikes: 2453, description: "Uploaded on Sep 2, 2008. It's midnight here at HQ and we are incredibly proud to present you with the debut of 'The Day That Never Comes' ...not so much the standard video fare, but what we like to think of as a short film.", youtubeUrl: "https://www.youtube.com/watch?v=Mlahvvymkxc"},
-      {embeddedUrl: "https://www.youtube.com/embed/Mlahvvymkxc", title: "Metallica - The Day That Never Comes[Video Premiere]", views: 21182703, likes: 97383, dislikes: 2453, description: "Uploaded on Sep 2, 2008. It's midnight here at HQ and we are incredibly proud to present you with the debut of 'The Day That Never Comes' ...not so much the standard video fare, but what we like to think of as a short film.", youtubeUrl: "https://www.youtube.com/watch?v=Mlahvvymkxc"},
-      {embeddedUrl: "https://www.youtube.com/embed/Mlahvvymkxc", title: "Metallica - The Day That Never Comes[Video Premiere]", views: 21182703, likes: 97383, dislikes: 2453, description: "Uploaded on Sep 2, 2008. It's midnight here at HQ and we are incredibly proud to present you with the debut of 'The Day That Never Comes' ...not so much the standard video fare, but what we like to think of as a short film.", youtubeUrl: "https://www.youtube.com/watch?v=Mlahvvymkxc"},
-      {embeddedUrl: "https://www.youtube.com/embed/Mlahvvymkxc", title: "Metallica - The Day That Never Comes[Video Premiere]", views: 21182703, likes: 97383, dislikes: 2453, description: "Uploaded on Sep 2, 2008. It's midnight here at HQ and we are incredibly proud to present you with the debut of 'The Day That Never Comes' ...not so much the standard video fare, but what we like to think of as a short film.", youtubeUrl: "https://www.youtube.com/watch?v=Mlahvvymkxc"}
-    ]
 
-    delayedSpinnerStop()
+    onSuccess = (data) ->
+      $scope.topRatedVideos = data.plain() #Plan method removes the Restangular properties
+
+    VideoService.list()
+      .then(onSuccess)
+      .finally(-> $rootScope.spinner.stop(LOADING_KEY))
 
   # Init the page
   getVideos()
