@@ -31,6 +31,9 @@
         <!-- Dynamic content depending on the current app state -->
         <div ui-view></div>
 
+        <!-- Environment label  -->
+        <ng-include src="'app/shared/artefacts/environment-label/env-label.html'" ng-if="currentEnvironment != 'PRODUCCION'"></ng-include>
+
         <!--Footer-->
         <ng-include src="'app/components/footer/footer.html'"></ng-include>
 

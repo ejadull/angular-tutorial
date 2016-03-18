@@ -7,7 +7,7 @@
   },
   "development": {
     "EnvironmentConfig": {
-      "env_name": "DEVELOPMENT",
+      "env_name": "LIVE",
       "api": "http://52.33.81.223:9090"
     }
   }
