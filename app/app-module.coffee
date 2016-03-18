@@ -1,4 +1,4 @@
-angular.module('videoApp', ['videos', 'tutorial', 'shared']) #Add recently created videos & shared module as a dependency of the root module
+angular.module('videoApp', ['videos', 'tutorial', 'contact', 'shared']) #Add recently created videos & shared module as a dependency of the root module
 
 .config(($urlRouterProvider, $sceDelegateProvider) ->
   ################### Routing configs #################
@@ -13,7 +13,11 @@ angular.module('videoApp', ['videos', 'tutorial', 'shared']) #Add recently creat
   ]);
 )
 
-.run(($rootScope, EnvironmentConfig, LoaderService) ->
+.run(($rootScope, EnvironmentConfig, LoaderService, Restangular) ->
+  ################### Restangular configs #################
+  Restangular.setBaseUrl(EnvironmentConfig.api)
+  Restangular.setDefaultHeaders({'Content-Type': 'application/json'})
+
   #Configurations in the running stage
   $rootScope.currentEnvironment = EnvironmentConfig.env_name #Save in the global namespace the name of the current environment
   $rootScope.spinner = LoaderService

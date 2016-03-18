@@ -11,6 +11,6 @@ angular.module('tutorial', ['ui.router', 'ui.bootstrap']) #Create the tutorial m
     .state('tutorial.steps', { #Videos child state (not abstract because it can be referenced). It inherits its father's layout
         url: '/steps'
         templateUrl: '/app/components/tutorial/steps/tutorial-steps.html'
-        controller: 'TrendingVideosController'
+        controller: 'TutorialController'
     })
 )

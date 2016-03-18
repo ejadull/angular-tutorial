@@ -2,13 +2,132 @@
     <!-- Title -->
     <div class="row">
         <div class="col-md-12">
-            <h4><i class="fa fa-dot-circle-o"></i>&nbsp; Step 3: </h4>
+            <h4><i class="fa fa-dot-circle-o"></i>&nbsp; Step 3: Create the first child state</h4>
         </div>
     </div>
     <!-- Details -->
     <div class="row">
-        <div class="col-md-12">
-            <p></p>
+        <div class="col-md-11">
+            <div class="paragraph">
+                <p>To start with step 3, please fetch the step-3 branch.</p>
+                <pre>git fetch && git checkout step-3</pre>
+            </div>
+            <div class="paragraph">
+                <p>1. Define a child state as below.</p>
+                <p><strong>videos-module.coffee</strong></p>
+                <pre>angular.module('videos', ['ui.router'])
+
+.config(($stateProvider) ->
+  $stateProvider
+    .state('videos', {
+        url: '/videos'
+        abstract: true
+        templateUrl: '/app/components/videos/videos-layout.html'
+    })
+    .state('videos.trending', { <span class="important-note">Doted notation to indicate hierarchy</span>
+      url: '/trending' <span class="important-note">The state full url is /videos/trending</span>
+      templateUrl: '/app/components/videos/trending/trending-videos.html'
+      controller: 'TrendingVideosController'
+    })
+)
+                </pre>
+            </div>
+            <div class="paragraph">
+                <p>2. Define the controller for our child state</p>
+                <p><strong>trending-videos-controller.coffee</strong></p>
+                <pre>angular.module('videos').controller('TrendingVideosController', ($scope, $log, $rootScope, $timeout) ->
+
+    LOADING_KEY = "trending-videos"
+
+    delayedSpinnerStop = ->
+        $timeout(->
+            $rootScope.spinner.stop(LOADING_KEY)
+        , 3000)
+
+    getVideos = -> #Simulate to retrieve the videos from BE
+        $rootScope.spinner.start(LOADING_KEY)
+        <span class="important-note">$scope.trendingVideos</span> = [ <span class="important-note">This property can be used in the view because it is inside de $scope object</span>
+            {embeddedUrl: .., title: .., views: .., likes: .., dislikes: .., description: .., youtubeUrl: ..},
+            {...},
+            {...},
+            ...
+        ]
+
+    delayedSpinnerStop()
+
+    # Init the page
+    getVideos()
+)
+                </pre>
+                <p>
+                    One of the core concepts of Angular are Scopes. A $scope is an object that ties a view (a DOM element) to the controller.
+                    In the MVC structure, this $scope object becomes the model. It provides an execution context that is bound to the DOM element (and its children).<br>
+                    Although it sounds complex, the $scope is just a JavaScript object. Both the controller and the view have access to the $scope so it can be used for
+                    communication between the two. This $scope object will house both the data and the functions that we’ll want to run in the view.
+                </p>
+            </div>
+            <div class="paragraph">
+                <p>3. Define the partial that will populate the parent layout</p>
+                <p><strong>trending-videos.html</strong></p>
+                <pre>&ltdiv class="container">
+    ...
+
+    &ltloader loading="spinner.isLoading('trending-videos')">
+        &ltdiv ng-repeat="video in <span class="important-note">trendingVideos</span>"> <span class="important-note">Using scope properties in the view</span>
+            &ltdiv class="row">
+                &ltdiv class="col-md-8">
+                    &ltdiv class="embed-responsive embed-responsive-16by9">
+                        &ltiframe class="embed-responsive-item" width="700" height="300" src="<code ng-non-bindable><span class="important-note">{{video.embeddedUrl}}</span></code>" frameborder="0" allowfullscreen>&lt/iframe> <span class="important-note">Interpolate the scope property values in the view. <code ng-non-bindable>{{}}</code> are used in non-angular contexts</span>
+                    &lt/div>
+                &lt/div>
+                &ltdiv class="col-md-4">
+                    &lth2><span class="important-note"><code ng-non-bindable>{{video.title}}</code></span>&lt/h2>
+                        &ltdiv class="video-stats">
+                        &lth3>&lti class="fa fa-eye">&lt/i><span class="important-note"><code ng-non-bindable>{{video.views}}</code></span>&lt/h3>
+                        &lth4 class="video-thumbs">
+                            &lta>&lti class="fa fa-thumbs-up">&lt/i><span class="important-note"><code ng-non-bindable>{{video.likes}}</code></span>&lt/a>
+                            &lta>&lti class="fa fa-thumbs-down">&lt/i><span class="important-note"><code ng-non-bindable>{{video.dislikes}}</code></span>&lt/a>
+                        &lt/h4>
+                    &lt/div>
+
+                    &ltp><span class="important-note"><code ng-non-bindable>{{video.description}}</code></span>&lt/p>
+                    &lta href="<span class="important-note"><code ng-non-bindable>{{video.youtubeUrl}}</code></span>" target="_blank">&lti class="fa fa-youtube-play">&lt/i>  Watch in youtube&lt/a>
+                &lt/div>
+            &lt/div>
+
+            &lthr>
+        &lt/div>
+    &lt/loader>
+&lt/div>
+                </pre>
+                <p>
+                    One of the core concepts of Angular are Scopes. A $scope is an object that ties a view (a DOM element) to the controller.
+                    In the MVC structure, this $scope object becomes the model. It provides an execution context that is bound to the DOM element (and its children).<br>
+                    Although it sounds complex, the $scope is just a JavaScript object. Both the controller and the view have access to the $scope so it can be used for
+                    communication between the two. This $scope object will house both the data and the functions that we’ll want to run in the view.
+                </p>
+            </div>
+            <div class="paragraph">
+                <p>4. Allow transition to the child state</p>
+                <p><strong>videos-layout.html</strong></p>
+                <pre><span class="important-note">Allow transition to the given state when clicking</span>
+...
+&ltdiv class="navbar navbar-inverse navbar-fixed-left">
+    &lta class="navbar-brand" href="#">Brand&lt/a>
+    &ltul class="nav navbar-nav">
+        &ltli ui-sref-active="active">&lta <span class="important-note">ui-sref="videos.trending"</span>>&lti class="fa fa-heart">&lt/i>&nbsp; Trending&lt/a>&lt/li>
+        &ltli ui-sref-active="active">&lta <span class="important-note">ui-sref="videos.top-rated"</span>>&lti class="fa fa-thumbs-up">&lt/i>&nbsp; Top Rated&lt/a>&lt/li>
+        &ltli ui-sref-active="active">&lta <span class="important-note">ui-sref="videos.most-viewed"</span>>&lti class="fa fa-eye">&lt/i>&nbsp; Most viewed&lt/a>&lt/li>
+        &ltli ui-sref-active="active">&lta <span class="important-note">ui-sref="videos.my-videos"</span>>&lti class="fa fa-folder-open">&lt/i>&nbsp; My videos&lt/a>&lt/li>
+    &lt/ul>
+&lt/div>
+...
+                </pre>
+                <p>
+                    State transitions can be achieved using the ui-sref directive as above, or also can be done by injecting the $state service and calling the go function with the state name as a parameter.
+                </p>
+                <pre>$state.go('videos.trending')</pre>
+            </div>
         </div>
     </div>
 </div>

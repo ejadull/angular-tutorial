@@ -16,7 +16,7 @@
             <div class="row">
                 <div class="col-md-8">
                     <div class="embed-responsive embed-responsive-16by9">
-                        <iframe class="embed-responsive-item" width="700" height="300" src="{{video.embeddedUrl}}" frameborder="0" allowfullscreen></iframe>
+                        <iframe class="embed-responsive-item" width="700" height="300" src="{{getYoutubeUrl(video.id, true)}}" frameborder="0" allowfullscreen></iframe>
                     </div>
                 </div>
                 <div class="col-md-4">
@@ -30,7 +30,7 @@
                     </div>
 
                     <p>{{video.description}}</p>
-                    <a href="{{video.youtubeUrl}}" target="_blank"><i class="fa fa-youtube-play"></i>  Watch in youtube</a>
+                    <a href="{{getYoutubeUrl(video.id, false)}}" target="_blank"><i class="fa fa-youtube-play"></i>  Watch in youtube</a>
                 </div>
             </div>
 

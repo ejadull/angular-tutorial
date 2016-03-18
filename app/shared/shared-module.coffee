@@ -1,1 +1,1 @@
-angular.module('shared', []) #Create the shared module to keep all artifacts inside
+angular.module('shared', ['restangular']) #Create the shared module to keep all artifacts inside

@@ -2,13 +2,110 @@
     <!-- Title -->
     <div class="row">
         <div class="col-md-12">
-            <h4><i class="fa fa-dot-circle-o"></i>&nbsp; Step 4:  </h4>
+            <h4><i class="fa fa-dot-circle-o"></i>&nbsp; Step 4:  Make real Ajax requests to retrieve data from Backend</h4>
         </div>
     </div>
     <!-- Details -->
     <div class="row">
-        <div class="col-md-12">
-            <p></p>
+        <div class="col-md-11">
+            <div class="paragraph">
+                <p>To start with step 4, please fetch the step-4 branch.</p>
+                <pre>git fetch && git checkout step-4</pre>
+            </div>
+            <div class="alert alert-info">
+                Note: We will use Restangular to perform requests to our RESTful API.
+                Restangular is an AngularJS service that simplifies common GET, POST, DELETE, and UPDATE requests with a minimum of client code.
+                It's a perfect fit for any WebApp that consumes data from a RESTful API. For more information, please refer to the official site <a href="https://github.com/mgonto/restangular" target="_blank">https://github.com/mgonto/restangular</a>
+            </div>
+            <div class="paragraph">
+                <p>1. The first thing we need to do is to configure Restangular in our app-module. Don't forget to add 'restangular' as a dependency of your module.</p>
+                <p><strong>app-module.coffee</strong></p>
+                <pre>.run(($rootScope, EnvironmentConfig, LoaderService, <span class="important-note">Restangular</span>) -> <span class="important-note">Inject the Restangular service</span>
+  ################### Restangular configs #################
+  <span class="important-note">Restangular.setBaseUrl(EnvironmentConfig.api)  </span> <span class="important-note">Set the base url for all our requests</span>
+  <span class="important-note">Restangular.setDefaultHeaders({'Content-Type': 'application/json'})  </span> <span class="important-note">Specify the request content type</span>
+
+  ...
+)
+                </pre>
+            </div>
+            <div class="paragraph">
+                <p>2. Then we will create a resources folder inside our shared folder. In this folder we will have all our resources implemented as factories.
+                   For example, our Video resource will gather all the logic to build urls for videos.</p>
+                <p><strong>videos-resource.coffee</strong></p>
+                <pre>angular.module('shared').factory('VideoResource', (Restangular) ->
+
+  this.videos = -> <span class="important-note">This method build the url {baseApiUrl}/Videos</span>
+    Restangular.all('Videos')
+
+  this.myVideos = -> <span class="important-note">This method build the url {baseApiUrl}/Videos/myVideos</span>
+    Restangular.one('Videos').one('myVideos')
+
+  return this
+)
+                </pre>
+            </div>
+            <div class="paragraph">
+                <p>3. One important thing to keep in mind is that all our resources should only be used by services.
+                   This is not a constraint that the framework impose, instead it is a good practice that allows to
+                   distribute the logic and increases reuse. So, having said this, we will create our Video service.
+                </p>
+                <p><strong>video-service.coffee</strong></p>
+                <pre><span class="important-note">We inject the VideoResource to use it inside our service</span>
+angular.module('shared').service('VideoService', ($q, $log, <span class="important-note">VideoResource</span>) ->
+
+  this.list = (params) ->
+    deferred = $q.defer() <span class="important-note">Create a deferred object</span>
+
+    onGetVideosSuccess = (data) -> <span class="important-note">Success callback</span>
+      $log.info "Videos retrieved successfully"
+      deferred.resolve(data) #Fulfill the promise
+
+    onGetVideosError = (reason) -> <span class="important-note">Failure callback</span>
+      $log.error "Error while retrieving the videos"
+      deferred.reject(reason) #Reject the promise
+
+    <span class="important-note">Build the url using our VideoResource and then perform the required action (GET, POST, etc)</span>
+    VideoResource.videos().getList(params).then(onGetVideosSuccess, onGetVideosError)
+    deferred.promise <span class="important-note">Return a promise for asynchronous execution</span>
+
+  ...
+
+  return this
+)
+                </pre>
+                <div class="alert alert-info">
+                    Note: To understand what promises are and their purpose you can read this article <a href="http://andyshora.com/promises-angularjs-explained-as-cartoon.html" target="_blank">Promises in AngularJS, Explained as a Cartoon</a>.
+                </div>
+            </div>
+            <div class="paragraph">
+                <p>4. Once again, note that we will use our services from controllers to delegate functionality.
+                </p>
+                <p><strong>trending-videos-controller.coffee</strong></p>
+                <pre>angular.module('videos').controller('TrendingVideosController', ($scope, $rootScope, VideoService) ->
+
+  LOADING_KEY = "trending-videos"
+
+  $scope.getYoutubeUrl = (videoId, embedded) -> <span class="important-note">Function in the $scope allows to be referenced in the view</span>
+    baseUrl = if embedded then "https://www.youtube.com/embed/" else "https://www.youtube.com/watch?v="
+    baseUrl+videoId
+
+  getVideos = -> #Simulate to retrieve the videos from BE
+    $rootScope.spinner.start(LOADING_KEY)
+
+    onSuccess = (data) ->
+      <span class="important-note">Populate the $scope.trendingVideos when the GET returns HTTP 200. This will refresh the view.</span>
+      $scope.trendingVideos = data.plain() #Plan method removes the Restangular properties
+
+    VideoService.list() <span class="important-note">Delegate the GET operation to our service. He knows which resource has to request.</span>
+      .then(onSuccess)
+      .finally(-> $rootScope.spinner.stop(LOADING_KEY))
+
+  # Init the page
+  getVideos()
+)
+                </pre>
+            </div>
         </div>
     </div>
 </div>
