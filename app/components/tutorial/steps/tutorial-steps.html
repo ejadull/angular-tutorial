@@ -6,24 +6,26 @@
         </div>
     </div>
     <hr/>
-    <div class="row">
-        <div class="col-md-12">
-            <uib-tabset active="0" justified="true">
-                <uib-tab index="0" heading="Step 1">
-                    <ng-include src="'app/components/tutorial/steps/step-1.html'"></ng-include>
-                </uib-tab>
-                <uib-tab index="1" heading="Step 2">
-                    <ng-include src="'app/components/tutorial/steps/step-2.html'"></ng-include>
-                </uib-tab>
-                <uib-tab index="2" heading="Step 3">
-                    <ng-include src="'app/components/tutorial/steps/step-3.html'"></ng-include>
-                </uib-tab>
-                <uib-tab index="3" heading="Step 4">
-                    <ng-include src="'app/components/tutorial/steps/step-4.html'"></ng-include>
-                </uib-tab>
-            </uib-tabset>
+    <loader loading="spinner.isLoading('tutorial-steps')">
+        <div class="row">
+            <div class="col-md-12">
+                <uib-tabset active="0" justified="true">
+                    <uib-tab index="0" heading="Step 1">
+                        <ng-include src="'app/components/tutorial/steps/step-1.html'"></ng-include>
+                    </uib-tab>
+                    <uib-tab index="1" heading="Step 2">
+                        <ng-include src="'app/components/tutorial/steps/step-2.html'"></ng-include>
+                    </uib-tab>
+                    <uib-tab index="2" heading="Step 3">
+                        <ng-include src="'app/components/tutorial/steps/step-3.html'"></ng-include>
+                    </uib-tab>
+                    <uib-tab index="3" heading="Step 4">
+                        <ng-include src="'app/components/tutorial/steps/step-4.html'"></ng-include>
+                    </uib-tab>
+                </uib-tabset>
+            </div>
         </div>
-    </div>
+    </loader>
 </div>
 
 
