@@ -1,5 +1,9 @@
 # Video App AngularJS SPA
 
+#### See the live demo
+
+[Live Demo](http://angular-tutorial.trendy.solutions/)
+
 #### This are the steps required to set up your environment
 
 1. Install Node Package Manager 
