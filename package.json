@@ -27,6 +27,7 @@
     "imagemin-pngquant": "^4.2.2",
     "jquery": "~2.1.4",
     "restangular": "~1.5.1",
-    "angular-ui-bootstrap": "~1.2.4"
+    "angular-ui-bootstrap": "~1.2.4",
+    "s3-upload": "~0.1.0"
   }
 }
