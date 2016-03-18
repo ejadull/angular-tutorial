@@ -2,13 +2,13 @@
   "local": {
     "EnvironmentConfig": {
       "env_name": "LOCAL",
-      "api": "http://localhost:8080/api"
+      "api": "http://52.33.81.223:9090"
     }
   },
   "development": {
     "EnvironmentConfig": {
       "env_name": "DEVELOPMENT",
-      "api": ""
+      "api": "http://52.33.81.223:9090"
     }
   }
 }
