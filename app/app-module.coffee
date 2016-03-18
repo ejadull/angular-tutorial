@@ -1,4 +1,4 @@
-angular.module('videoApp', ['videos', 'tutorial', 'shared']) #Add recently created videos & shared module as a dependency of the root module
+angular.module('videoApp', ['videos', 'tutorial', 'contact', 'shared']) #Add recently created videos & shared module as a dependency of the root module
 
 .config(($urlRouterProvider, $sceDelegateProvider) ->
   ################### Routing configs #################
